@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة منتج مع صورة باستخدام div وتخزين البيانات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .product {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .product img {
+            width: 100px; /* حجم الصورة */
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .product h3 {
+            margin: 10px 0;
+        }
+        .product p {
+            margin: 5px 0;
+            color: #555;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>إضافة منتج مع صورة</h1>
+    
+    <form id="productForm" onsubmit="addProduct(event)" enctype="multipart/form-data">
+        <input type="text" id="productName" placeholder="اسم المنتج" ><br><br>
+        <input type="number" id="productPrice" placeholder="السعر" ><br><br>
+        <input type="number" id="productQuantity" placeholder="الكمية" ><br><br>
+        <input type="file" id="productImage" accept="image/*" required><br><br>
+        <button type="submit">إضافة المنتج</button>
+    </form>
+
+    <h2>قائمة المنتجات</h2>
+    <div id="productContainer" class="product-container">
+        <!-- المنتجات ستُضاف هنا -->
+    </div>
+
+    <script>
+        // تحميل البيانات من localStorage عند فتح الصفحة
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+
+        // دالة لإضافة المنتج إلى الـ div
+        function addProduct(event) {
+            event.preventDefault(); // منع إرسال النموذج بشكل عادي
+
+            // الحصول على البيانات من الحقول
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const quantity = document.getElementById('productQuantity').value;
+            const image = document.getElementById('productImage').files[0]; // الحصول على الصورة
+
+            // قراءة الصورة وتحويلها إلى URL لعرضها
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageUrl = e.target.result; // عنوان URL للصورة
+
+                // إضافة المنتج إلى المصفوفة
+                const product = {
+                    name: name,
+                    price: price,
+                    quantity: quantity,
+                    image: imageUrl
+                };
+                products.push(product);
+
+                // تخزين المنتجات في localStorage
+                localStorage.setItem('products', JSON.stringify(products));
+
+                // تحديث الـ div لعرض المنتج
+                updateProductContainer();
+            };
+            reader.readAsDataURL(image); // قراءة الصورة كـ data URL
+
+            // إعادة تعيين النموذج
+            document.getElementById('productForm').reset();
+        }
+
+        // دالة لتحديث الـ div
+        function updateProductContainer() {
+            const container = document.getElementById('productContainer');
+            container.innerHTML = ''; // مسح المحتويات السابقة
+
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+
+                // إضافة الصورة
+                const img = document.createElement('imge');
+                img.src = product.image;
+                productDiv.appendChild(img);
+
+                // إضافة اسم المنتج
+                const productName = document.createElement('h3');
+                productName.textContent = product.name;
+                productDiv.appendChild(productName);
+
+                // إضافة السعر
+                const productPrice = document.createElement('p');
+                productPrice.textContent = `السعر: ${product.price} د.ت`;
+                productDiv.appendChild(productPrice);
+
+                // إضافة الكمية
+                const productQuantity = document.createElement('p');
+                productQuantity.textContent = `الكمية: ${product.quantity}`;
+                productDiv.appendChild(productQuantity);
+
+                // إضافة المنتج إلى الـ div container
+                container.appendChild(productDiv);
+            });
+        }
+
+        // عند تحميل الصفحة، يتم عرض المنتجات المخزنة
+        updateProductContainer();
+    </script>
+
+</body>
+</html>
