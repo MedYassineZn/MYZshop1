@@ -1,0 +1,275 @@
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* place-items: center; */
+    height: 100vh;
+    width: 100vw;
+    /* overflow: hidden; */
+}
+
+
+/* From Uiverse.io by Satwinder04 */ 
+.input-container {
+    position: relative;
+    margin: 10px auto;
+    width: 200px;
+    background-color: transparent;
+    
+  }
+  
+  .input-container input[type="text"] {
+    font-size: 20px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    padding: 5px 0;
+    background-color: transparent;
+    outline: none;
+    color: #ccc;
+    
+  }
+  
+  .input-container .label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ccc;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background-color: transparent;
+  }
+  
+  .input-container input[type="text"]:focus ~ .label,
+  .input-container input[type="text"]:valid ~ .label {
+    top: -20px;
+    font-size: 16px;
+    color: #818CF8;
+    background-color: transparent;
+  }
+  
+  .input-container .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #818CF8;
+    transform: scaleX(0);
+    transition: all 0.3s ease;
+  }
+  
+  .input-container input[type="text"]:focus ~ .underline,
+  .input-container input[type="text"]:valid ~ .underline {
+    transform: scaleX(1);
+  }
+  
+  
+
+
+fieldset{
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    
+    
+}
+form{
+    height: 80vh;
+    width: 80vw;
+    margin-left: 50px;
+    
+
+}
+table{
+    padding: 20px;
+    height: 400px;
+    z-index: 2;
+
+}
+.product-container{
+  gap: 20px;
+  justify-content: center;
+  
+  width: 100%;
+  display: flex;
+
+}
+.product {
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 300px;
+  height: 400px;
+  text-align:left;
+  border-radius: 5px;
+  /* box-shadow: 5px 5px 10px rgba(76, 96, 249, 0.406); */
+  background: rgb(184, 184, 184);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset, rgb(0, 0, 0) 0px 18px 26px -12px inset;
+  
+  
+}
+.product img {
+  width: 200px; /* حجم الصورة */
+  height: 500px;
+  object-fit: cover;
+  margin-bottom: 0px;
+  min-width: 100%;
+  min-height: 70%;
+  border-radius: 5px;
+}
+.product h3 {
+  margin: 10px 0;
+  font-size: 1.5em;
+  color: #000;
+}
+.product p {
+  margin: 10px 0;
+  color: #474747;
+}
+
+/* إخفاء حقل رفع الملف الأصلي */
+.file-input {
+  display: none;
+  
+}
+
+/* تصميم زر مخصص */
+.upload-label {
+  background-color: #ffffff; /* لون الخلفية */
+  color: rgb(0, 0, 0);             /* لون النص */
+  padding: 4.5px 51px;       /* تباعد داخلي */
+  border-radius: 0px;       /* زوايا دائرية */
+  cursor: pointer;          /* مؤشر اليد */
+  font-weight: bold;        /* خط عريض */
+  transition: background-color 0.3s ease; /* تأثير عند تمرير الماوس */
+  margin: 10px 0px; 
+  width: 100px;
+  font-size: 0.86em;
+}
+
+/* تأثير عند تمرير الماوس */
+.upload-label:hover {
+  background-color: #5087e0;
+}
+
+/* نص اسم الملف */
+#file-name {
+  margin-left: 10px;
+  font-style: italic;
+  color: #555;
+  display: none;
+  
+}
+/* From Uiverse.io by andrew-demchenk0 */ 
+.button {
+  position: relative;
+  width: 100px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #34974d;
+  background-color: #ffffff;
+  margin: 10px 0px;
+}
+
+.button, .button__icon, .button__text ,.button__icon1 {
+  transition: all 0.3s;
+}
+
+.button .button__text {
+  transform: translateX(0px);
+  color: #000000;
+  font-weight: 600;
+}
+
+.button .button__icon {
+  position: absolute;
+  transform: translateX(62.8px);
+  height: 100%;
+  width: 30px;
+  background-color: #84c1f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+}
+.button .button__icon1 {
+  position: absolute;
+  transform: translateX(62.8px);
+  height: 100%;
+  width: 30px;
+  background-color: #fa2929;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  
+}
+i{
+  transform: rotate(45deg);
+}
+
+.button .svg {
+  width: 30px;
+  stroke: #fff;
+}
+
+.button:hover {
+  background: #34974d;
+}
+
+.button:hover .button__text {
+  color: transparent;
+}
+
+.button:hover .button__icon  {
+  width: 100px;
+  transform: translateX(-7px);
+}
+.button:hover .button__icon1  {
+  width: 100px;
+  transform: translateX(-7px);
+}
+
+.button:active .button__icon  {
+  background-color: #2e8644;
+}
+
+.button:active {
+  border: 1px solid #2e8644;
+}
+
+legend{
+  color: white;
+  border-left: solid 2px;
+  border-right: solid 2px;
+  
+}
+
+
+
+
+
+/* store css */
+
+
+#store-container{
+  
+  width: 95vw;
+  height: 100%;
+  
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap; /* لجعل المنتجات تتكدس تلقائيًا في الأسطر إذا كانت كثيرة */
+  justify-content: space-between;
+  gap: 5px; /* المسافة بين المنتجات */
+
+}
+
+
+

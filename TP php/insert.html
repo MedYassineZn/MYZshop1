@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="insertStyle.css">
+    <!-- <script src="insert.js"></script> -->
+</head>
+<body>
+    <form id="productForm" onchange="addProduct(event)" enctype="multipart/form-data">
+        <fieldset>
+            <legend>ADD Product</legend>
+            <table  >
+                <tr>
+                    <td colspan="2">
+                        <!-- From Uiverse.io by Satwinder04 -->
+                        <div class="input-container">
+                            <input type="text" id="input" required="">
+                            <label for="input" class="label">Num livre</label>
+                        <div class="underline"></div>
+                        </div>
+                    </td >
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="input-container">
+                            <input type="text" id="np" required="">
+                            <label for="input" class="label">Name livre</label>
+                        <div class="underline"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="input-container">
+                            <input type="text" id="p" required="">
+                            <label for="input" class="label">prix livre</label>
+                        <div class="underline"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="input-container">
+                            <input type="text" id="qt" required="">
+                            <label for="input" class="label">Qt </label>
+                        <div class="underline"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="custom-file-upload" >
+                            <label for="imgf" class="upload-label">Chose picture📤</label>
+                            <input type="file" id="imgf" class="file-input" accept="image/*">
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" onclick="confirmProducts()"  class="button">
+                            <span class="button__text">Add Item</span>
+                            <span class="button__icon">+</span>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="reset"   class="button">
+                            <span class="button__text">Cancel</span>
+                            <span class="button__icon1"><i>+</i></span>
+                        </button>
+                    </td>
+                    
+                     <!-- <td><input type="text" id="deleteProductName" placeholder="أدخل اسم المنتج للحذف"></td>
+                    <td><input type="button" onclick="deleteProduct()" value="suprimer"></td> -->
+                </tr>
+            </table>
+            
+            <div id="productContainer" class="product-container">
+                <!-- المنتجات ستُضاف هنا -->
+            </div>
+        </fieldset>
+    </form>
+    <script>
+        // مصفوفة لتخزين المنتجات مؤقتًا
+        let products = [];
+    
+        // دالة لإضافة المنتج
+        function addProduct(event) {
+            event.preventDefault();
+    
+            const name = document.getElementById('np').value;
+            const price = document.getElementById('p').value;
+            const quantity = document.getElementById('qt').value;
+            const image = document.getElementById('imgf').files[0];
+    
+            // if (!name || !price || !quantity || !image) {
+            //     alert("يرجى ملء جميع الحقول وإضافة صورة.");
+            //     return;
+            // }
+    
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageUrl = e.target.result;
+    
+                const product = {
+                    name: name,
+                    price: price,
+                    quantity: quantity,
+                    image: imageUrl
+                };
+                products.push(product);
+                updateProductContainer();
+            };
+            reader.readAsDataURL(image);
+    
+            document.getElementById('productForm').reset();
+           
+        }
+    
+        // دالة لتحديث عرض المنتجات
+        function updateProductContainer() {
+    const container = document.getElementById('productContainer');
+    container.innerHTML = ''; // مسح المحتوى الحالي
+
+    // التحقق إذا كان هناك منتجات
+    if (products.length > 0) {
+        const latestProduct = products[products.length - 1]; // آخر منتج مضاف
+
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
+
+        const img = document.createElement('img');
+        img.src = latestProduct.image;
+        img.alt = "صورة المنتج";
+        img.style.width = '150px';
+        img.style.height = '150px';
+        img.style.objectFit = 'cover';
+        productDiv.appendChild(img);
+
+        const productName = document.createElement('h3');
+        productName.textContent = latestProduct.name;
+        productDiv.appendChild(productName);
+
+        const productPrice = document.createElement('p');
+        productPrice.textContent = `Price : ${latestProduct.price} DT`;
+        productDiv.appendChild(productPrice);
+
+        const productQuantity = document.createElement('p');
+        productQuantity.textContent = `Quantity : ${latestProduct.quantity}`;
+        productDiv.appendChild(productQuantity);
+
+        container.appendChild(productDiv);
+    }
+}
+
+    
+        // دالة لتأكيد الحفظ في localStorage
+        function confirmProducts() {
+            if (products.length === 0) {
+                alert("لم يتم إضافة أي منتجات للحفظ.");
+                return;
+            }
+            localStorage.setItem('products', JSON.stringify(products));
+            alert("تم حفظ المنتجات بنجاح! ✅");
+        }
+    
+        // دالة لحذف منتج حسب اسمه
+        function deleteProduct() {
+            const productNameToDelete = document.getElementById('deleteProductName').value.trim();
+    
+            if (productNameToDelete === '') {
+                alert("يرجى إدخال اسم المنتج الذي تريد حذفه.");
+                return;
+            }
+    
+            const initialLength = products.length;
+    
+            // حذف المنتج من المصفوفة
+            products = products.filter(product => product.name !== productNameToDelete);
+    
+            if (products.length === initialLength) {
+                alert("لم يتم العثور على المنتج الذي تريد حذفه.");
+            } else {
+                // تحديث البيانات في localStorage
+                localStorage.setItem('products', JSON.stringify(products));
+                updateProductContainer();
+                alert(`تم حذف المنتج "${productNameToDelete}" بنجاح. ❌`);
+            }
+    
+            // إعادة تعيين حقل الإدخال
+            document.getElementById('deleteProductName').value = '';
+        }
+    
+        // تحميل المنتجات المخزنة عند فتح الصفحة
+        window.onload = function() {
+            const savedProducts = JSON.parse(localStorage.getItem('products')) || [];
+            if (savedProducts.length > 0) {
+                products = savedProducts;
+                
+            }
+        };
+
+
+
+        document.getElementById('imgf').addEventListener('change', function() {
+        const fileName = this.files[0] ? this.files[0].name : 'لم يتم اختيار أي ملف';
+        document.getElementById('file-name').textContent = fileName;
+        });
+
+    </script>
+    
+    
+    
+</body>
+</html>

@@ -1,0 +1,52 @@
+#store-container{
+  
+    width: 95vw;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* لجعل المنتجات تتكدس تلقائيًا في الأسطر إذا كانت كثيرة */
+    justify-content: space-between;
+    gap: 5px; /* المسافة بين المنتجات */
+  
+}
+
+
+  .product-container{
+    gap: 10px;
+    justify-content: center;
+    
+    width: 100%;
+    display: flex;
+  
+  }
+  .product {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 200px;
+    height: 280px;
+    text-align:left;
+    border-radius: 5px;
+    /* box-shadow: 5px 5px 10px rgba(76, 96, 249, 0.406); */
+    background: rgb(184, 184, 184);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset, rgb(0, 0, 0) 0px 18px 26px -12px inset;
+    
+    
+  }
+  .product img {
+    width: 200px; /* حجم الصورة */
+    height: 500px;
+    object-fit: cover;
+    margin-bottom: 0px;
+    min-width: 100%;
+    min-height: 70%;
+    border-radius: 5px;
+  }
+  .product h3 {
+    margin: 0px 0;
+    font-size: 1.5em;
+    color: #000;
+  }
+  .product p {
+    margin: 0px 0;
+    color: #474747;
+  }
